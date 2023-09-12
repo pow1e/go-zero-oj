@@ -1,0 +1,18 @@
+syntax = "v1"
+
+info(
+    title: "common"
+    desc: "common"
+)
+
+type (
+    PageReq {
+        Page int64 `form:"page"  validate:"number,gte=1"  label:"页数"`
+        Limit int64 `form:"limit" validate:"number,gte=1"  label:"条数"`
+    }
+    Pagination {
+        Page int64 `json:"page"`
+        Limit int64 `json:"limit"`
+        Total int64 `json:"total"`
+    }
+)

@@ -1,0 +1,72 @@
+syntax = "v1"
+
+info(
+    title: "user"
+    desc: "用户接口"
+    version :"1.0"
+)
+
+
+// 用户登录
+type (
+    UserLoginReq {
+        CaptchaCode string `json:"captcha_code"` // 验证码
+        UserName string `json:"username"`        // 用户名
+        Password string `json:"password"`        // 密码
+    }
+    UserLoginResp {
+        AccessToken string `json:"access_token"`
+        RefreshToken string `json:"refresh_token"`
+    }
+)
+
+// 用户注册
+type (
+    UserRegisterReq {
+        CaptchaCode string `json:"captcha_code"`         // 验证码
+        UserName string `json:"username"`                // 用户名
+        Password string `json:"password"`                // 密码
+        ConfirmPassword string `json:"confirm_password"` // 确认密码
+    }
+)
+
+// 验证码获取
+type CaptchaResp {
+    CaptchaID string `json:"captcha_id"`     // 验证码id
+    PictureData string `json:"picture_data"` // 验证码的base64
+}
+
+
+// 用户登录
+@server(
+    group: user
+    prefix: /api/v1/user
+)
+service core-api {
+    @doc "用户登录"
+    @handler userLogin
+    post /login (UserLoginReq) returns (UserLoginResp)
+}
+
+// 用户注册
+@server(
+    group: user
+    prefix: /api/v1/user
+)
+service core-api {
+    @doc "用户注册"
+    @handler userRegister
+    post /register (UserRegisterReq)
+}
+
+// 获取验证码
+@server(
+    group : user
+    prefix : /api/v1/user
+    middleware: CaptchaThrottling
+)
+service core-api {
+    @doc "验证码"
+    @handler getCaptcha
+    get /captcha returns (CaptchaResp)
+}

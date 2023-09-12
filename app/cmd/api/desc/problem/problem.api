@@ -1,0 +1,43 @@
+syntax = "v1"
+
+info(
+    title: "problem"
+    desc: "问题接口"
+    version: "1.0"
+)
+
+type (
+    ProblemPageReq {
+        page int `form:"page,default=1"`
+        Size int `form:"size,default=10"`
+        KeyWord string `form:"keyword,optional"`
+    }
+
+    Problem {
+        ID int32 `json:"id"`
+        Identity string `json:"identity"`
+        Cid string `json:"cid"`
+        Title string `json:"title"`
+        MaxRuntime int32 `json:"max_runtime"`
+        MaxMem int32 `json:"max_mem"`
+        Content string `json:"content"`
+        CreatedAt string `json:"created_at"`
+        UpdatedAt string `json:"updated_at"`
+        DeletedAt string `json:"deleted_at"`
+    }
+
+    ProblemListResp {
+        Count int64 `json:"count"`
+        ProblemList []Problem `json:"problemList"`
+    }
+)
+
+@server(
+    group : problem
+    prefix : /api/v1/problem
+)
+service core-api {
+    @doc "问题列表"
+    @handler getProblemList
+    get /list (ProblemPageReq) returns (ProblemListResp) // 这里我将返回类型改为了[]*model.Problem
+}

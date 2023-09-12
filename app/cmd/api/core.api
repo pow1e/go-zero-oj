@@ -1,0 +1,18 @@
+syntax = "v1"
+
+info(
+	title : "go-zero-oj"
+	desc: "go-zero-oj"
+	author : "pow1e"
+)
+
+import (
+	// 公共结构体
+	"desc/common.api"
+
+	// 用户模块
+	"desc/user/user.api"
+
+	// 问题模块
+	"desc/problem/problem.api"
+)

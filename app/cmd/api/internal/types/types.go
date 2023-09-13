@@ -35,26 +35,50 @@ type CaptchaResp struct {
 	PictureData string `json:"picture_data"` // 验证码的base64
 }
 
-type ProblemPageReq struct {
-	Page    int    `form:"page,default=1"`
-	Size    int    `form:"size,default=10"`
-	KeyWord string `form:"keyword,optional"`
+type ProblemCategory struct {
+	ID        string `form:"id"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
+	DeletedAt string `json:"deleted_at"`
+}
+
+type Category struct {
+	Identity  string `json:"identity"`
+	Name      string `json:"name"`
+	ParentId  int32  `json:"parent_id"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
+	DeletedAt string `json:"deleted_at"`
 }
 
 type Problem struct {
-	ID         int32  `json:"id"`
-	Identity   string `json:"identity"`
-	Cid        string `json:"cid"`
-	Title      string `json:"title"`
-	MaxRuntime int32  `json:"max_runtime"`
-	MaxMem     int32  `json:"max_mem"`
-	Content    string `json:"content"`
-	CreatedAt  string `json:"created_at"`
-	UpdatedAt  string `json:"updated_at"`
-	DeletedAt  string `json:"deleted_at"`
+	Identity   string     `json:"identity"`
+	Title      string     `json:"title"`
+	MaxRuntime int32      `json:"max_runtime"`
+	MaxMem     int32      `json:"max_mem"`
+	Content    string     `json:"content"`
+	Category   []Category `json:"category"`
+	CreatedAt  string     `json:"created_at"`
+	UpdatedAt  string     `json:"updated_at"`
+	DeletedAt  string     `json:"deleted_at"`
+}
+
+type ProblemPageReq struct {
+	Page             int    `form:"page,default=1"`
+	Size             int    `form:"size,default=10"`
+	KeyWord          string `form:"keyword,optional"`
+	CategoryIdentity string `form:"category_identity,optional"` // 分类唯一标识
 }
 
 type ProblemListResp struct {
 	Count       int64     `json:"count"`
 	ProblemList []Problem `json:"problemList"`
+}
+
+type ProblemDeitalReq struct {
+	Identity string `form:"identity"`
+}
+
+type ProblemDeitalResp struct {
+	Problem Problem `json:"problem"`
 }

@@ -29,7 +29,6 @@ func newProblem(db *gorm.DB, opts ...gen.DOOption) problem {
 	_problem.ALL = field.NewAsterisk(tableName)
 	_problem.ID = field.NewInt32(tableName, "id")
 	_problem.Identity = field.NewString(tableName, "identity")
-	_problem.Cid = field.NewString(tableName, "cid")
 	_problem.Title = field.NewString(tableName, "title")
 	_problem.MaxRuntime = field.NewInt32(tableName, "max_runtime")
 	_problem.MaxMem = field.NewInt32(tableName, "max_mem")
@@ -49,7 +48,6 @@ type problem struct {
 	ALL        field.Asterisk
 	ID         field.Int32
 	Identity   field.String // 唯一标识
-	Cid        field.String // 以逗号分割的分类
 	Title      field.String // 标题
 	MaxRuntime field.Int32  // 最大运行时间
 	MaxMem     field.Int32  // 最大运行内存
@@ -75,7 +73,6 @@ func (p *problem) updateTableName(table string) *problem {
 	p.ALL = field.NewAsterisk(table)
 	p.ID = field.NewInt32(table, "id")
 	p.Identity = field.NewString(table, "identity")
-	p.Cid = field.NewString(table, "cid")
 	p.Title = field.NewString(table, "title")
 	p.MaxRuntime = field.NewInt32(table, "max_runtime")
 	p.MaxMem = field.NewInt32(table, "max_mem")
@@ -99,10 +96,9 @@ func (p *problem) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (p *problem) fillFieldMap() {
-	p.fieldMap = make(map[string]field.Expr, 10)
+	p.fieldMap = make(map[string]field.Expr, 9)
 	p.fieldMap["id"] = p.ID
 	p.fieldMap["identity"] = p.Identity
-	p.fieldMap["cid"] = p.Cid
 	p.fieldMap["title"] = p.Title
 	p.fieldMap["max_runtime"] = p.MaxRuntime
 	p.fieldMap["max_mem"] = p.MaxMem

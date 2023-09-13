@@ -16,7 +16,6 @@ const TableNameProblem = "problem"
 type Problem struct {
 	ID         int32          `gorm:"column:id;primaryKey" json:"id"`
 	Identity   string         `gorm:"column:identity;comment:唯一标识" json:"identity"`          // 唯一标识
-	Cid        string         `gorm:"column:cid;comment:以逗号分割的分类" json:"cid"`                // 以逗号分割的分类
 	Title      string         `gorm:"column:title;comment:标题" json:"title"`                  // 标题
 	MaxRuntime int32          `gorm:"column:max_runtime;comment:最大运行时间" json:"max_runtime"`  // 最大运行时间
 	MaxMem     int32          `gorm:"column:max_mem;comment:最大运行内存" json:"max_mem"`          // 最大运行内存

@@ -58,4 +58,15 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		},
 		rest.WithPrefix("/api/v1/problem"),
 	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/",
+				Handler: problem.GetProblemDetailHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/api/v1/problem"),
+	)
 }

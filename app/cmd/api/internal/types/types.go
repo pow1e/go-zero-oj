@@ -35,6 +35,20 @@ type CaptchaResp struct {
 	PictureData string `json:"picture_data"` // 验证码的base64
 }
 
+type UserDeitalReq struct {
+	Identity string `form:"identity"`
+}
+
+type UserDeitalResp struct {
+	Identity  string `form:"identity"`
+	Name      string `form:"name"`
+	Phone     string `form:"phone"`
+	Mail      string `form:"mail"`
+	CreatedAt string `form:"created_at"`
+	UpdatedAt string `form:"updated_at"`
+	DeletedAt string `form:"deleted_at"`
+}
+
 type ProblemCategory struct {
 	ID        string `form:"id"`
 	CreatedAt string `json:"created_at"`
@@ -81,4 +95,29 @@ type ProblemDeitalReq struct {
 
 type ProblemDeitalResp struct {
 	Problem Problem `json:"problem"`
+}
+
+type Submit struct {
+	Identity  string `json:"submit_identity"`
+	Status    int32  `json:"status"`
+	Language  int32  `json:"language"`
+	RunTime   int32  `json:"run_time"`
+	RunMem    int32  `json:"run_mem"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
+	DeletedAt string `json:"deleted_at"`
+}
+
+type SubmitListReq struct {
+	Page            int    `form:"page,default=1"`
+	Size            int    `form:"size,default=10"`
+	ProblemIdentity string `form:"problem_identity,optional"`
+	UserIdentity    string `form:"user_identity,optional"`
+	Language        int32  `form:"language,optional" validate:"omitempty,oneof=1 2 3 4 5" label:"语言"`
+	Status          int32  `form:"status,optional" validate:"omitempty,oneof=-1 1 2 3 4" label:"状态"`
+}
+
+type SubmitListResp struct {
+	Count      int64    `json:"count"`
+	SubmitList []Submit `json:"submitList"`
 }

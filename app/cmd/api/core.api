@@ -15,4 +15,7 @@ import (
 
 	// 问题模块
 	"desc/problem/problem.api"
+
+	// 提交模块
+	"desc/submit/submit.api"
 )

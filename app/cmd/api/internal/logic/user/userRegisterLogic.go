@@ -50,12 +50,20 @@ func (l *UserRegisterLogic) UserRegister(req *types.UserRegisterReq, ip string) 
 	u := l.svcCtx.Repository.Model.User
 	findUser, err := u.WithContext(l.ctx).Where(u.Name.Eq(req.UserName)).First()
 
-	// 用户不存在
+	// 用户不存在->创建用户
 	if err != nil && errors.Is(err, gorm.ErrRecordNotFound) {
 		req.Password, err = utils.Encrypt(req.Password)
-		err = u.WithContext(l.ctx).Create(&model.User{Name: req.UserName, Password: req.Password})
+		err = u.WithContext(l.ctx).Create(
+			&model.User{Name: req.UserName,
+				Password: req.Password,
+				Identity: utils.NewUUID(),
+			})
 		if err != nil {
 			l.Logger.Debug("创建用户失败", err.Error())
+			return errors.New(consts.ErrUnKnow)
+		}
+		// 注册成功后则删除验证码
+		if err = l.DeleteCaptchaCache(key); err != nil {
 			return errors.New(consts.ErrUnKnow)
 		}
 		return nil

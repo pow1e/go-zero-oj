@@ -7,13 +7,13 @@ import (
 	"github.com/wuqianaer/go-zero-oj/app/cmd/api/internal/repo/dao"
 	"github.com/wuqianaer/go-zero-oj/app/cmd/api/internal/svc"
 	"github.com/wuqianaer/go-zero-oj/app/cmd/api/internal/types"
-	"github.com/wuqianaer/go-zero-oj/app/common/common"
 	"github.com/wuqianaer/go-zero-oj/app/common/consts"
+	"github.com/wuqianaer/go-zero-oj/app/common/global"
+
 	"github.com/wuqianaer/go-zero-oj/app/common/pkg/utils"
+	"github.com/zeromicro/go-zero/core/logx"
 	"gorm.io/gorm"
 	"time"
-
-	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type UserLoginLogic struct {
@@ -66,7 +66,7 @@ func (l *UserLoginLogic) UserLogin(req *types.UserLoginReq, ip string) (resp *ty
 	}
 
 	// 颁发token
-	acToken, reToken, err := l.CreateJwtToken(common.BaseClaim{
+	acToken, reToken, err := l.CreateJwtToken(global.BaseClaim{
 		ID:       user.ID,
 		UserName: user.Name,
 	})
@@ -87,11 +87,11 @@ func (l *UserLoginLogic) UserLogin(req *types.UserLoginReq, ip string) (resp *ty
 	}, nil
 }
 
-func (l *UserLoginLogic) CreateJwtToken(baseClaim common.BaseClaim) (accessToken, refreshToken string, err error) {
+func (l *UserLoginLogic) CreateJwtToken(baseClaim global.BaseClaim) (accessToken, refreshToken string, err error) {
 	unixTime := time.Now().Unix()
 	accessExpiresTime := unixTime + l.svcCtx.Config.Auth.AccessExpire
 	refreshExpiresTime := unixTime + l.svcCtx.Config.Auth.RefreshExpire
-	claims := common.CustomClaims{
+	claims := global.CustomClaims{
 		RegisteredClaims: jwt.RegisteredClaims{
 			IssuedAt:  jwt.NewNumericDate(time.Now()),                      // 签发时间
 			ExpiresAt: jwt.NewNumericDate(time.Unix(accessExpiresTime, 0)), // 过期时间

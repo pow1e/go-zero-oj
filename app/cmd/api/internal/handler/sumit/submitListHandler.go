@@ -20,9 +20,9 @@ func SubmitListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		if validateErr := global.GetValidate().Validate.StructCtx(r.Context(), &req); validateErr != nil {
+		if validateErr := global.Validate.StructCtx(r.Context(), &req); validateErr != nil {
 			for _, err := range validateErr.(validator.ValidationErrors) {
-				response.JsonBaseResponseCtx(r.Context(), w, errors.New(err.Translate(global.GetValidate().Translator)))
+				response.JsonBaseResponseCtx(r.Context(), w, errors.New(err.Translate(global.Translator)))
 				return
 			}
 		}

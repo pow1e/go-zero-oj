@@ -6,6 +6,7 @@ import (
 	"github.com/wuqianaer/go-zero-oj/app/cmd/api/internal/config"
 	"github.com/wuqianaer/go-zero-oj/app/cmd/api/internal/handler"
 	"github.com/wuqianaer/go-zero-oj/app/cmd/api/internal/svc"
+	"github.com/wuqianaer/go-zero-oj/app/common/global"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/rest"
@@ -18,6 +19,8 @@ func main() {
 
 	var c config.Config
 	conf.MustLoad(*configFile, &c)
+
+	global.InitValidator()
 
 	server := rest.MustNewServer(c.RestConf)
 	defer server.Stop()

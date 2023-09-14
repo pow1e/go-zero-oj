@@ -10,14 +10,10 @@ import (
 )
 
 var validateOnce sync.Once
-var Validate *Validator
+var Validate *validator.Validate
+var Translator ut.Translator
 
-type Validator struct {
-	Validate   *validator.Validate
-	Translator ut.Translator
-}
-
-func GetValidate() *Validator {
+func InitValidator() {
 	validateOnce.Do(func() {
 		val := validator.New()
 		val.RegisterTagNameFunc(func(fld reflect.StructField) string {
@@ -29,10 +25,7 @@ func GetValidate() *Validator {
 		if validateErr := zhTranslations.RegisterDefaultTranslations(val, trans); validateErr != nil {
 			panic(validateErr)
 		}
-		Validate = &Validator{
-			Validate:   val,
-			Translator: trans,
-		}
+		Validate = val
+		Translator = trans
 	})
-	return Validate
 }

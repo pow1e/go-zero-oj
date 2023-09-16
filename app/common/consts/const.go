@@ -23,3 +23,9 @@ const (
 	Cpp
 	C
 )
+
+const (
+	AdminID             = 1
+	AuthorizationHeader = "Authorization"
+	UserInfo            = "userInfo"
+)

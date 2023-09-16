@@ -1,117 +1,140 @@
 syntax = "v1"
 
 info(
-	title: "problem"
-	desc: "问题接口"
-	version: "1.0"
+    title: "problem"
+    desc: "问题接口"
+    version: "1.0"
 )
 
 // 问题分页列表
 type (
-	// 问题分类列表
-	ProblemCategory {
-		ID        string `form:"id"`
-		CreatedAt string `json:"created_at"`
-		UpdatedAt string `json:"updated_at"`
-		DeletedAt string `json:"deleted_at"`
-	}
+    // 问题分类列表
+    ProblemCategory {
+        ID string `form:"id"`
+        CreatedAt string `json:"created_at"`
+        UpdatedAt string `json:"updated_at"`
+        DeletedAt string `json:"deleted_at"`
+    }
 
-	Category {
-		Identity  string `json:"identity"`
-		Name      string `json:"name"`
-		ParentId  int32  `json:"parent_id"`
-		CreatedAt string `json:"created_at"`
-		UpdatedAt string `json:"updated_at"`
-		DeletedAt string `json:"deleted_at"`
-	}
+    Category {
+        Identity string `json:"identity"`
+        Name string `json:"name"`
+        ParentId int32 `json:"parent_id"`
+        CreatedAt string `json:"created_at"`
+        UpdatedAt string `json:"updated_at"`
+        DeletedAt string `json:"deleted_at"`
+    }
 
-	Problem {
-		Identity   string     `json:"identity"`
-		Title      string     `json:"title"`
-		MaxRuntime int32      `json:"max_runtime"`
-		MaxMem     int32      `json:"max_mem"`
-		Content    string     `json:"content"`
-		Category   []Category `json:"category"`
-		CreatedAt  string     `json:"created_at"`
-		UpdatedAt  string     `json:"updated_at"`
-		DeletedAt  string     `json:"deleted_at"`
-	}
+    Problem {
+        Identity string `json:"identity"`
+        Title string `json:"title"`
+        MaxRuntime int32 `json:"max_runtime"`
+        MaxMem int32 `json:"max_mem"`
+        Content string `json:"content"`
+        Category []Category `json:"category"`
+        CreatedAt string `json:"created_at"`
+        UpdatedAt string `json:"updated_at"`
+        DeletedAt string `json:"deleted_at"`
+    }
 
-	ProblemPageReq {
-		Page             int    `form:"page,default=1"`
-		Size             int    `form:"size,default=10"`
-		KeyWord          string `form:"keyword,optional"`
-		CategoryIdentity string `form:"category_identity,optional"` // 分类唯一标识
-	}
+    ProblemPageReq {
+        Page int `form:"page,default=1"`
+        Size int `form:"size,default=10"`
+        KeyWord string `form:"keyword,optional"`
+        CategoryIdentity string `form:"category_identity,optional"` // 分类唯一标识
+    }
 
-	ProblemListResp {
-		Count       int64     `json:"count"`
-		ProblemList []Problem `json:"problemList"`
-	}
+    ProblemListResp {
+        Count int64 `json:"count"`
+        ProblemList []Problem `json:"problemList"`
+    }
 )
 // 查询所有问题列表
 @server(
-	group : problem
-	prefix : /api/v1/problem
+    group : problem
+    prefix : /api/v1/problem
 )
 service core-api {
-	@doc "分页查询所有问题，并且返回对应的种类信息"
-	@handler getProblemList
-	get /list (ProblemPageReq) returns (ProblemListResp) // 这里我将返回类型改为了[]*model.Problem
+    @doc "分页查询所有问题，并且返回对应的种类信息"
+    @handler getProblemList
+    get /list (ProblemPageReq) returns (ProblemListResp) // 这里我将返回类型改为了[]*model.Problem
 }
 
 
 type (
-	ProblemDeitalReq {
-		Identity string `form:"identity"`
-	}
-	ProblemDeitalResp {
-		Problem Problem `json:"problem"`
-	}
+    ProblemDeitalReq {
+        Identity string `form:"identity"`
+    }
+    ProblemDeitalResp {
+        Problem Problem `json:"problem"`
+    }
 )
 // 根据唯一标识查询问题
 @server(
-	group : problem
-	prefix : /api/v1/problem
+    group : problem
+    prefix : /api/v1/problem
 )
 service core-api {
-	@doc "根据问题唯一标识查询问题的相关信息，并且返回对应的种类信息"
-	@handler getProblemDetail
-	get / (ProblemDeitalReq) returns (ProblemDeitalResp)
+    @doc "根据问题唯一标识查询问题的相关信息，并且返回对应的种类信息"
+    @handler getProblemDetail
+    get / (ProblemDeitalReq) returns (ProblemDeitalResp)
 }
 
 
 // 提交列表 查询所有的提交数据
 type (
-	ProblemSubmit {
-		Identity string `json:"submit_identity"`
-		Status int32 `json:"status"`
-		Language int32 `json:"language"`
-		RunTime int32 `json:"run_time"`
-		RunMem int32 `json:"run_mem"`
-		CreatedAt string `json:"created_at"`
-		UpdatedAt string `json:"updated_at"`
-		DeletedAt string `json:"deleted_at"`
-	}
-	ProblemSubmitListReq {
-		Page int `form:"page,default=1"`
-		Size int `form:"size,default=10"`
-		ProblemIdentity string `form:"problem_identity,optional"`
-		UserIdentity string `form:"user_identity,optional"`
-		Language int32 `form:"language,optional" validate:"omitempty,oneof=1 2 3 4 5" label:"语言"`
-		Status int32 `form:"status,optional" validate:"omitempty,oneof=-1 1 2 3 4" label:"状态"`
-	}
-	ProblemSubmitListResp {
-		Count int64 `json:"count"`
-		ProblemSubmitList []ProblemSubmit `json:"submitList"`
-	}
+    ProblemSubmit {
+        Identity string `json:"submit_identity"`
+        Status int32 `json:"status"`
+        Language int32 `json:"language"`
+        RunTime int32 `json:"run_time"`
+        RunMem int32 `json:"run_mem"`
+        CreatedAt string `json:"created_at"`
+        UpdatedAt string `json:"updated_at"`
+        DeletedAt string `json:"deleted_at"`
+    }
+    ProblemSubmitListReq {
+        Page int `form:"page,default=1"`
+        Size int `form:"size,default=10"`
+        ProblemIdentity string `form:"problem_identity,optional"`
+        UserIdentity string `form:"user_identity,optional"`
+        Language int32 `form:"language,optional" validate:"omitempty,oneof=1 2 3 4 5" label:"语言"`
+        Status int32 `form:"status,optional" validate:"omitempty,oneof=-1 1 2 3 4" label:"状态"`
+    }
+    ProblemSubmitListResp {
+        Count int64 `json:"count"`
+        ProblemSubmitList []ProblemSubmit `json:"submitList"`
+    }
 )
 @server(
-	group: problem
-	prefix: /api/v1/problem
+    group: problem
+    prefix: /api/v1/problem
 )
 service core-api {
-	@doc "查询提交列表"
-	@handler submitList
-	get /submit-list (ProblemSubmitListReq) returns (ProblemSubmitListResp)
+    @doc "查询提交列表"
+    @handler submitList
+    get /submit-list (ProblemSubmitListReq) returns (ProblemSubmitListResp)
+}
+
+// 问题提交 需要管理员
+type (
+    PublishProblemReq {
+        Identity string `json:"identity"`
+        Title string `json:"title"`
+        MaxRuntime int32 `json:"max_runtime"`
+        MaxMem int32 `json:"max_mem"`
+        Path string `json:"path"`
+        Content string `json:"content"`
+        CategoryIdentity string `json:"category_identity"`
+    }
+)
+@server(
+    middleware : Authorization
+    group : admin
+    prefix : /api/v1/problem
+)
+service core-api {
+    @doc "新增问题"
+    @handler publishProblem
+    post /publish-problem (PublishProblemReq)
 }

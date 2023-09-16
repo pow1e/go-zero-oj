@@ -6,8 +6,6 @@ const (
 	ErrConfirmPassword         = "两次密码不一致，请重试"
 	ErrPasswordLength          = "密码长度不合法"
 	ErrUserNameLength          = "用户名长度不合法"
-	ErrCreatToken              = "颁发token失败"
-	ErrCreateCaptcha           = "生成验证码失败"
 	ErrOverTakeCaptchaMaxTimes = "超过验证码请求的最大次数，请稍后重试"
 )
 
@@ -22,4 +20,13 @@ const (
 const (
 	ErrPhoneFormat = "电话格式错误，请重试"
 	ErrEmailFormat = "邮箱格式错误，请重试"
+)
+
+// token以及校验
+const (
+	ErrCreatToken    = "颁发token失败"
+	ErrCreateCaptcha = "生成验证码失败"
+	ErrAuthorization = "用户认证失败,请重试"
+	ErrTokenExpired  = "当前请求token已过期，请重试"
+	ErrTokenInvalid  = "当前请求token不合法，请重试"
 )

@@ -11,6 +11,7 @@ type ServiceContext struct {
 	Config            config.Config
 	Repository        *repo.Repository
 	CaptchaThrottling rest.Middleware
+	Authorization     rest.Middleware
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -22,5 +23,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 			repository.Redis,
 			c.Captcha.MaxTime,
 		).Handle,
+		Authorization: middleware.NewAuthorizationMiddleware(c.Auth).Handle,
 	}
 }

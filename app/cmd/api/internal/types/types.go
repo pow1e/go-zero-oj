@@ -137,3 +137,13 @@ type ProblemSubmitListResp struct {
 	Count             int64           `json:"count"`
 	ProblemSubmitList []ProblemSubmit `json:"submitList"`
 }
+
+type PublishProblemReq struct {
+	Identity         string `json:"identity"`
+	Title            string `json:"title"`
+	MaxRuntime       int32  `json:"max_runtime"`
+	MaxMem           int32  `json:"max_mem"`
+	Path             string `json:"path"`
+	Content          string `json:"content"`
+	CategoryIdentity string `json:"category_identity"`
+}

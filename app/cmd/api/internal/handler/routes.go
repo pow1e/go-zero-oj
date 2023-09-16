@@ -4,6 +4,7 @@ package handler
 import (
 	"net/http"
 
+	admin "github.com/wuqianaer/go-zero-oj/app/cmd/api/internal/handler/admin"
 	problem "github.com/wuqianaer/go-zero-oj/app/cmd/api/internal/handler/problem"
 	user "github.com/wuqianaer/go-zero-oj/app/cmd/api/internal/handler/user"
 	"github.com/wuqianaer/go-zero-oj/app/cmd/api/internal/svc"
@@ -100,6 +101,20 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: problem.SubmitListHandler(serverCtx),
 			},
 		},
+		rest.WithPrefix("/api/v1/problem"),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.Authorization},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/publish-problem",
+					Handler: admin.PublishProblemHandler(serverCtx),
+				},
+			}...,
+		),
 		rest.WithPrefix("/api/v1/problem"),
 	)
 }

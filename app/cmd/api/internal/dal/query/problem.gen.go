@@ -32,6 +32,7 @@ func newProblem(db *gorm.DB, opts ...gen.DOOption) problem {
 	_problem.Title = field.NewString(tableName, "title")
 	_problem.MaxRuntime = field.NewInt32(tableName, "max_runtime")
 	_problem.MaxMem = field.NewInt32(tableName, "max_mem")
+	_problem.Path = field.NewString(tableName, "path")
 	_problem.Content = field.NewString(tableName, "content")
 	_problem.CreatedAt = field.NewTime(tableName, "created_at")
 	_problem.UpdatedAt = field.NewTime(tableName, "updated_at")
@@ -51,6 +52,7 @@ type problem struct {
 	Title      field.String // 标题
 	MaxRuntime field.Int32  // 最大运行时间
 	MaxMem     field.Int32  // 最大运行内存
+	Path       field.String // 数据集
 	Content    field.String // 题目内容
 	CreatedAt  field.Time   // 创建时间
 	UpdatedAt  field.Time   // 修改时间
@@ -76,6 +78,7 @@ func (p *problem) updateTableName(table string) *problem {
 	p.Title = field.NewString(table, "title")
 	p.MaxRuntime = field.NewInt32(table, "max_runtime")
 	p.MaxMem = field.NewInt32(table, "max_mem")
+	p.Path = field.NewString(table, "path")
 	p.Content = field.NewString(table, "content")
 	p.CreatedAt = field.NewTime(table, "created_at")
 	p.UpdatedAt = field.NewTime(table, "updated_at")
@@ -96,12 +99,13 @@ func (p *problem) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (p *problem) fillFieldMap() {
-	p.fieldMap = make(map[string]field.Expr, 9)
+	p.fieldMap = make(map[string]field.Expr, 10)
 	p.fieldMap["id"] = p.ID
 	p.fieldMap["identity"] = p.Identity
 	p.fieldMap["title"] = p.Title
 	p.fieldMap["max_runtime"] = p.MaxRuntime
 	p.fieldMap["max_mem"] = p.MaxMem
+	p.fieldMap["path"] = p.Path
 	p.fieldMap["content"] = p.Content
 	p.fieldMap["created_at"] = p.CreatedAt
 	p.fieldMap["updated_at"] = p.UpdatedAt

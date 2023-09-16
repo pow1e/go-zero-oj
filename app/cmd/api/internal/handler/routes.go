@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	problem "github.com/wuqianaer/go-zero-oj/app/cmd/api/internal/handler/problem"
-	sumit "github.com/wuqianaer/go-zero-oj/app/cmd/api/internal/handler/sumit"
 	user "github.com/wuqianaer/go-zero-oj/app/cmd/api/internal/handler/user"
 	"github.com/wuqianaer/go-zero-oj/app/cmd/api/internal/svc"
 
@@ -64,6 +63,17 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodGet,
+				Path:    "/rank-list",
+				Handler: user.GetUserRankListHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/api/v1/user"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
 				Path:    "/list",
 				Handler: problem.GetProblemListHandler(serverCtx),
 			},
@@ -86,10 +96,10 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodGet,
-				Path:    "/list",
-				Handler: sumit.SubmitListHandler(serverCtx),
+				Path:    "/submit-list",
+				Handler: problem.SubmitListHandler(serverCtx),
 			},
 		},
-		rest.WithPrefix("/api/v1/submit"),
+		rest.WithPrefix("/api/v1/problem"),
 	)
 }

@@ -40,13 +40,29 @@ type UserDeitalReq struct {
 }
 
 type UserDeitalResp struct {
-	Identity  string `form:"identity"`
-	Name      string `form:"name"`
-	Phone     string `form:"phone"`
-	Mail      string `form:"mail"`
-	CreatedAt string `form:"created_at"`
-	UpdatedAt string `form:"updated_at"`
-	DeletedAt string `form:"deleted_at"`
+	Identity         string `json:"identity"`
+	Name             string `json:"name"`
+	Phone            string `json:"phone"`
+	Mail             string `json:"mail"`
+	FinishProblemNum int32  `json:"finish_problem_num"`
+	SubmitNum        int32  `json:"submit_num"`
+	CreatedAt        string `json:"created_at"`
+	UpdatedAt        string `json:"updated_at"`
+	DeletedAt        string `json:"deleted_at"`
+}
+
+type UserRankListReq struct {
+	Page int    `form:"page,default=1"`
+	Size int    `form:"size,default=10"`
+	Name string `form:"name,optional"`
+}
+
+type UserRankListResp struct {
+	Identity         string `json:"identity"`
+	Name             string `json:"name"`
+	FinishProblemNum int32  `json:"finish_problem_num"`
+	SubmitNum        int32  `json:"submit_num"`
+	CreatedAt        string `json:"created_at"`
 }
 
 type ProblemCategory struct {
@@ -97,7 +113,7 @@ type ProblemDeitalResp struct {
 	Problem Problem `json:"problem"`
 }
 
-type Submit struct {
+type ProblemSubmit struct {
 	Identity  string `json:"submit_identity"`
 	Status    int32  `json:"status"`
 	Language  int32  `json:"language"`
@@ -108,7 +124,7 @@ type Submit struct {
 	DeletedAt string `json:"deleted_at"`
 }
 
-type SubmitListReq struct {
+type ProblemSubmitListReq struct {
 	Page            int    `form:"page,default=1"`
 	Size            int    `form:"size,default=10"`
 	ProblemIdentity string `form:"problem_identity,optional"`
@@ -117,7 +133,7 @@ type SubmitListReq struct {
 	Status          int32  `form:"status,optional" validate:"omitempty,oneof=-1 1 2 3 4" label:"状态"`
 }
 
-type SubmitListResp struct {
-	Count      int64    `json:"count"`
-	SubmitList []Submit `json:"submitList"`
+type ProblemSubmitListResp struct {
+	Count             int64           `json:"count"`
+	ProblemSubmitList []ProblemSubmit `json:"submitList"`
 }

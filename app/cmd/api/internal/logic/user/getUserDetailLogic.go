@@ -46,12 +46,14 @@ func (l *GetUserDetailLogic) GetUserDetail(req *types.UserDeitalReq) (resp *type
 	}
 
 	return &types.UserDeitalResp{
-		Identity:  user.Identity,
-		Name:      user.Name,
-		Phone:     user.Phone,
-		Mail:      user.Mail,
-		CreatedAt: user.CreatedAt.Format(time.DateTime),
-		UpdatedAt: user.UpdatedAt.Format(time.DateTime),
-		DeletedAt: deleteTime,
+		Identity:         user.Identity,
+		Name:             user.Name,
+		Phone:            user.Phone,
+		Mail:             user.Mail,
+		FinishProblemNum: user.FinishProblemNum,
+		SubmitNum:        user.SubmitNum,
+		CreatedAt:        user.CreatedAt.Format(time.DateTime),
+		UpdatedAt:        user.UpdatedAt.Format(time.DateTime),
+		DeletedAt:        deleteTime,
 	}, nil
 }

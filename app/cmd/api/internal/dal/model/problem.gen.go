@@ -19,6 +19,7 @@ type Problem struct {
 	Title      string         `gorm:"column:title;comment:标题" json:"title"`                  // 标题
 	MaxRuntime int32          `gorm:"column:max_runtime;comment:最大运行时间" json:"max_runtime"`  // 最大运行时间
 	MaxMem     int32          `gorm:"column:max_mem;comment:最大运行内存" json:"max_mem"`          // 最大运行内存
+	Path       string         `gorm:"column:path;comment:数据集" json:"path"`                   // 数据集
 	Content    string         `gorm:"column:content;comment:题目内容" json:"content"`            // 题目内容
 	CreatedAt  time.Time      `gorm:"column:created_at;comment:创建时间" json:"created_at"`      // 创建时间
 	UpdatedAt  time.Time      `gorm:"column:updated_at;comment:修改时间" json:"updated_at"`      // 修改时间

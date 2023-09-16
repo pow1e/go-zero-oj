@@ -32,7 +32,6 @@ func newSubmit(db *gorm.DB, opts ...gen.DOOption) submit {
 	_submit.ProblemIdentity = field.NewString(tableName, "problem_identity")
 	_submit.UserIdentity = field.NewString(tableName, "user_identity")
 	_submit.Status = field.NewInt32(tableName, "status")
-	_submit.Path = field.NewString(tableName, "path")
 	_submit.Language = field.NewInt32(tableName, "language")
 	_submit.RunTime = field.NewInt32(tableName, "run_time")
 	_submit.RunMem = field.NewInt32(tableName, "run_mem")
@@ -54,13 +53,12 @@ type submit struct {
 	ProblemIdentity field.String // 问题的唯一标识
 	UserIdentity    field.String // 用户的唯一标识
 	Status          field.Int32  // -1表示待判断，1表示答案正确，2表示答案错误，3表示运行超时，4表示运行超内存
-	Path            field.String
-	Language        field.Int32 // 1表示go 2表示java 3表示rust
-	RunTime         field.Int32 // 运行时间
-	RunMem          field.Int32 // 运行内存
-	CreatedAt       field.Time  // 创建时间
-	UpdatedAt       field.Time  // 修改时间
-	DeletedAt       field.Field // 删除时间(软删除)
+	Language        field.Int32  // 1表示go 2表示java 3表示rust
+	RunTime         field.Int32  // 运行时间
+	RunMem          field.Int32  // 运行内存
+	CreatedAt       field.Time   // 创建时间
+	UpdatedAt       field.Time   // 修改时间
+	DeletedAt       field.Field  // 删除时间(软删除)
 
 	fieldMap map[string]field.Expr
 }
@@ -82,7 +80,6 @@ func (s *submit) updateTableName(table string) *submit {
 	s.ProblemIdentity = field.NewString(table, "problem_identity")
 	s.UserIdentity = field.NewString(table, "user_identity")
 	s.Status = field.NewInt32(table, "status")
-	s.Path = field.NewString(table, "path")
 	s.Language = field.NewInt32(table, "language")
 	s.RunTime = field.NewInt32(table, "run_time")
 	s.RunMem = field.NewInt32(table, "run_mem")
@@ -105,13 +102,12 @@ func (s *submit) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (s *submit) fillFieldMap() {
-	s.fieldMap = make(map[string]field.Expr, 12)
+	s.fieldMap = make(map[string]field.Expr, 11)
 	s.fieldMap["id"] = s.ID
 	s.fieldMap["identity"] = s.Identity
 	s.fieldMap["problem_identity"] = s.ProblemIdentity
 	s.fieldMap["user_identity"] = s.UserIdentity
 	s.fieldMap["status"] = s.Status
-	s.fieldMap["path"] = s.Path
 	s.fieldMap["language"] = s.Language
 	s.fieldMap["run_time"] = s.RunTime
 	s.fieldMap["run_mem"] = s.RunMem

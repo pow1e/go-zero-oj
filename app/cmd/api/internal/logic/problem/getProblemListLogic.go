@@ -5,6 +5,7 @@ import (
 	"errors"
 	"github.com/wuqianaer/go-zero-oj/app/cmd/api/internal/dal/model"
 	"github.com/wuqianaer/go-zero-oj/app/common/consts"
+	"github.com/wuqianaer/go-zero-oj/app/common/pkg/utils"
 	"time"
 
 	"github.com/wuqianaer/go-zero-oj/app/cmd/api/internal/svc"
@@ -62,7 +63,6 @@ func (l *GetProblemListLogic) GetProblemList(req *types.ProblemPageReq) (resp *t
 
 	for _, problem := range problems {
 		// 向中间表查询当前遍历的problem所关联的categoryID
-		var deleteTime string
 		cids := make([]int32, 0)
 		problemCategoryDo := problemCategoryDao.WithContext(l.ctx).Select(problemCategoryDao.CategoryID)
 		// 判断category_identity是否是为空，不为空则查询当前遍历的问题的所有关联的category种类信息
@@ -85,9 +85,6 @@ func (l *GetProblemListLogic) GetProblemList(req *types.ProblemPageReq) (resp *t
 		category := buildCategory(categories)
 
 		// 设置删除时间
-		if problem.DeletedAt.Valid {
-			deleteTime = problem.DeletedAt.Time.Format(time.DateTime)
-		}
 
 		problemList = append(problemList, types.Problem{
 			Identity:   problem.Identity,
@@ -98,7 +95,7 @@ func (l *GetProblemListLogic) GetProblemList(req *types.ProblemPageReq) (resp *t
 			Category:   category,
 			CreatedAt:  problem.CreatedAt.Format(time.DateTime),
 			UpdatedAt:  problem.UpdatedAt.Format(time.DateTime),
-			DeletedAt:  deleteTime,
+			DeletedAt:  utils.ParseDeleteTime(problem.DeletedAt),
 		})
 	}
 	return &types.ProblemListResp{
@@ -111,17 +108,13 @@ func (l *GetProblemListLogic) GetProblemList(req *types.ProblemPageReq) (resp *t
 func buildCategory(categoryList []*model.Category) []types.Category {
 	resp := make([]types.Category, 0)
 	for _, c := range categoryList {
-		var deleteTime string
-		if c.DeletedAt.Valid {
-			deleteTime = c.DeletedAt.Time.Format(time.DateTime)
-		}
 		category := types.Category{
 			Identity:  c.Identity,
 			Name:      c.Name,
 			ParentId:  c.ParentID,
 			CreatedAt: c.CreatedAt.Format(time.DateTime),
 			UpdatedAt: c.UpdatedAt.Format(time.DateTime),
-			DeletedAt: deleteTime,
+			DeletedAt: utils.ParseDeleteTime(c.DeletedAt),
 		}
 		resp = append(resp, category)
 	}

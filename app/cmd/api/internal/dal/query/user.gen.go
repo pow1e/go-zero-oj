@@ -33,6 +33,8 @@ func newUser(db *gorm.DB, opts ...gen.DOOption) user {
 	_user.Password = field.NewString(tableName, "password")
 	_user.Phone = field.NewString(tableName, "phone")
 	_user.Mail = field.NewString(tableName, "mail")
+	_user.FinishProblemNum = field.NewInt32(tableName, "finish_problem_num")
+	_user.SubmitNum = field.NewInt32(tableName, "submit_num")
 	_user.CreatedAt = field.NewTime(tableName, "created_at")
 	_user.UpdatedAt = field.NewTime(tableName, "updated_at")
 	_user.DeletedAt = field.NewField(tableName, "deleted_at")
@@ -45,16 +47,18 @@ func newUser(db *gorm.DB, opts ...gen.DOOption) user {
 type user struct {
 	userDo
 
-	ALL       field.Asterisk
-	ID        field.Int32
-	Identity  field.String
-	Name      field.String // 用户名称
-	Password  field.String // 密码
-	Phone     field.String // 电话
-	Mail      field.String // 邮箱
-	CreatedAt field.Time   // 创建时间
-	UpdatedAt field.Time   // 修改时间
-	DeletedAt field.Field  // 删除时间(软删除)
+	ALL              field.Asterisk
+	ID               field.Int32
+	Identity         field.String
+	Name             field.String // 用户名称
+	Password         field.String // 密码
+	Phone            field.String // 电话
+	Mail             field.String // 邮箱
+	FinishProblemNum field.Int32  // 完成问题的次数
+	SubmitNum        field.Int32  // 用户提交次数
+	CreatedAt        field.Time   // 创建时间
+	UpdatedAt        field.Time   // 修改时间
+	DeletedAt        field.Field  // 删除时间(软删除)
 
 	fieldMap map[string]field.Expr
 }
@@ -77,6 +81,8 @@ func (u *user) updateTableName(table string) *user {
 	u.Password = field.NewString(table, "password")
 	u.Phone = field.NewString(table, "phone")
 	u.Mail = field.NewString(table, "mail")
+	u.FinishProblemNum = field.NewInt32(table, "finish_problem_num")
+	u.SubmitNum = field.NewInt32(table, "submit_num")
 	u.CreatedAt = field.NewTime(table, "created_at")
 	u.UpdatedAt = field.NewTime(table, "updated_at")
 	u.DeletedAt = field.NewField(table, "deleted_at")
@@ -96,13 +102,15 @@ func (u *user) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (u *user) fillFieldMap() {
-	u.fieldMap = make(map[string]field.Expr, 9)
+	u.fieldMap = make(map[string]field.Expr, 11)
 	u.fieldMap["id"] = u.ID
 	u.fieldMap["identity"] = u.Identity
 	u.fieldMap["name"] = u.Name
 	u.fieldMap["password"] = u.Password
 	u.fieldMap["phone"] = u.Phone
 	u.fieldMap["mail"] = u.Mail
+	u.fieldMap["finish_problem_num"] = u.FinishProblemNum
+	u.fieldMap["submit_num"] = u.SubmitNum
 	u.fieldMap["created_at"] = u.CreatedAt
 	u.fieldMap["updated_at"] = u.UpdatedAt
 	u.fieldMap["deleted_at"] = u.DeletedAt

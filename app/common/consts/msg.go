@@ -18,3 +18,8 @@ const (
 	ErrUserLogin    = "用户名或密码错误，请重试"
 	ErrCaptcha      = "验证码错误，请重试"
 )
+
+const (
+	ErrPhoneFormat = "电话格式错误，请重试"
+	ErrEmailFormat = "邮箱格式错误，请重试"
+)

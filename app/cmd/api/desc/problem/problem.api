@@ -79,3 +79,39 @@ service core-api {
 	@handler getProblemDetail
 	get / (ProblemDeitalReq) returns (ProblemDeitalResp)
 }
+
+
+// 提交列表 查询所有的提交数据
+type (
+	ProblemSubmit {
+		Identity string `json:"submit_identity"`
+		Status int32 `json:"status"`
+		Language int32 `json:"language"`
+		RunTime int32 `json:"run_time"`
+		RunMem int32 `json:"run_mem"`
+		CreatedAt string `json:"created_at"`
+		UpdatedAt string `json:"updated_at"`
+		DeletedAt string `json:"deleted_at"`
+	}
+	ProblemSubmitListReq {
+		Page int `form:"page,default=1"`
+		Size int `form:"size,default=10"`
+		ProblemIdentity string `form:"problem_identity,optional"`
+		UserIdentity string `form:"user_identity,optional"`
+		Language int32 `form:"language,optional" validate:"omitempty,oneof=1 2 3 4 5" label:"语言"`
+		Status int32 `form:"status,optional" validate:"omitempty,oneof=-1 1 2 3 4" label:"状态"`
+	}
+	ProblemSubmitListResp {
+		Count int64 `json:"count"`
+		ProblemSubmitList []ProblemSubmit `json:"submitList"`
+	}
+)
+@server(
+	group: problem
+	prefix: /api/v1/problem
+)
+service core-api {
+	@doc "查询提交列表"
+	@handler submitList
+	get /submit-list (ProblemSubmitListReq) returns (ProblemSubmitListResp)
+}

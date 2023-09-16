@@ -14,15 +14,17 @@ const TableNameUser = "user"
 
 // User mapped from table <user>
 type User struct {
-	ID        int32          `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
-	Identity  string         `gorm:"column:identity" json:"identity"`
-	Name      string         `gorm:"column:name;comment:用户名称" json:"name"`                  // 用户名称
-	Password  string         `gorm:"column:password;comment:密码" json:"password"`            // 密码
-	Phone     string         `gorm:"column:phone;comment:电话" json:"phone"`                  // 电话
-	Mail      string         `gorm:"column:mail;comment:邮箱" json:"mail"`                    // 邮箱
-	CreatedAt time.Time      `gorm:"column:created_at;comment:创建时间" json:"created_at"`      // 创建时间
-	UpdatedAt time.Time      `gorm:"column:updated_at;comment:修改时间" json:"updated_at"`      // 修改时间
-	DeletedAt gorm.DeletedAt `gorm:"column:deleted_at;comment:删除时间(软删除)" json:"deleted_at"` // 删除时间(软删除)
+	ID               int32          `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
+	Identity         string         `gorm:"column:identity" json:"identity"`
+	Name             string         `gorm:"column:name;comment:用户名称" json:"name"`                                // 用户名称
+	Password         string         `gorm:"column:password;comment:密码" json:"password"`                          // 密码
+	Phone            string         `gorm:"column:phone;comment:电话" json:"phone"`                                // 电话
+	Mail             string         `gorm:"column:mail;comment:邮箱" json:"mail"`                                  // 邮箱
+	FinishProblemNum int32          `gorm:"column:finish_problem_num;comment:完成问题的次数" json:"finish_problem_num"` // 完成问题的次数
+	SubmitNum        int32          `gorm:"column:submit_num;comment:用户提交次数" json:"submit_num"`                  // 用户提交次数
+	CreatedAt        time.Time      `gorm:"column:created_at;comment:创建时间" json:"created_at"`                    // 创建时间
+	UpdatedAt        time.Time      `gorm:"column:updated_at;comment:修改时间" json:"updated_at"`                    // 修改时间
+	DeletedAt        gorm.DeletedAt `gorm:"column:deleted_at;comment:删除时间(软删除)" json:"deleted_at"`               // 删除时间(软删除)
 }
 
 // TableName User's table name

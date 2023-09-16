@@ -13,8 +13,8 @@ func Encrypt(plaintext string) (string, error) {
 	return string(ciphertext), nil
 }
 
-// ComparePassword 比较密码
-func ComparePassword(a, b string) error {
+// CompareCiphertext 比较密码
+func CompareCiphertext(a, b string) error {
 	err := bcrypt.CompareHashAndPassword([]byte(a), []byte(b))
 	if err != nil {
 		return err

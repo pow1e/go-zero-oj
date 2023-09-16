@@ -1,4 +1,4 @@
-package sumit
+package problem
 
 import (
 	"context"
@@ -27,7 +27,7 @@ func NewSubmitListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Submit
 	}
 }
 
-func (l *SubmitListLogic) SubmitList(req *types.SubmitListReq) (resp *types.SubmitListResp, err error) {
+func (l *SubmitListLogic) SubmitList(req *types.ProblemSubmitListReq) (resp *types.ProblemSubmitListResp, err error) {
 	submitDao := l.svcCtx.Repository.Model.Submit
 	req.Page = (req.Page - 1) * req.Size
 	submitDo := submitDao.WithContext(l.ctx).Offset(req.Page).Limit(req.Size)
@@ -50,19 +50,20 @@ func (l *SubmitListLogic) SubmitList(req *types.SubmitListReq) (resp *types.Subm
 	}
 
 	submitList := l.buildSubmitList(list)
-	return &types.SubmitListResp{
-		SubmitList: submitList,
-		Count:      int64(len(submitList)),
+	return &types.ProblemSubmitListResp{
+		ProblemSubmitList: submitList,
+		Count:             int64(len(submitList)),
 	}, nil
 }
-func (l *SubmitListLogic) buildSubmitList(submit []*model.Submit) []types.Submit {
-	resp := make([]types.Submit, 0, len(submit))
+
+func (l *SubmitListLogic) buildSubmitList(submit []*model.Submit) []types.ProblemSubmit {
+	resp := make([]types.ProblemSubmit, 0, len(submit))
 	for _, s := range submit {
 		deleteTime := ""
 		if s.DeletedAt.Valid {
 			deleteTime = s.DeletedAt.Time.Format(time.DateTime)
 		}
-		resp = append(resp, types.Submit{
+		resp = append(resp, types.ProblemSubmit{
 			Identity:  s.Identity,
 			Status:    s.Status,
 			Language:  s.Language,

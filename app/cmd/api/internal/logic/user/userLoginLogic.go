@@ -61,7 +61,7 @@ func (l *UserLoginLogic) UserLogin(req *types.UserLoginReq, ip string) (resp *ty
 	}
 
 	// 比较密码
-	if err = utils.ComparePassword(user.Password, req.Password); err != nil {
+	if err = utils.CompareCiphertext(user.Password, req.Password); err != nil {
 		return nil, errors.New(consts.ErrUserLogin)
 	}
 

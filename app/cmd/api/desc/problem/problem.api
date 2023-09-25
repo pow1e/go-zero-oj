@@ -129,7 +129,7 @@ type (
     }
 )
 @server(
-    middleware : Authorization
+    middleware : Login
     group : admin
     prefix : /api/v1/problem
 )

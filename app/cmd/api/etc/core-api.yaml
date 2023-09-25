@@ -4,7 +4,7 @@ Port: 8080
 Timeout: 500000
 
 Mysql:
-  UserName: root
+  UserName: pow1e
   Password: "123456"
   Path: 127.0.0.1
   Port: "3306"
@@ -15,7 +15,7 @@ Mysql:
 Auth:
   AccessSecret: "213sf-sdfsvcx2-asfdsgdsfg"
   AccessExpire: 3600 # 60秒
-  RefreshExpire: 3600 # 120秒
+  RefreshExpire: 12000 # 120秒
 
 
 Redis:
@@ -29,5 +29,5 @@ Captcha:
   Width: 240
   Height: 80
   Timeout: 300 # 5分钟
-  MaxTime: 50 # 单个ip一天请求次数
+  MaxTime: 10 # 单个ip一天请求次数
   RefreshMaxTime: 60 # 一天

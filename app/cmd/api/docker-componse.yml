@@ -1,0 +1,31 @@
+version: '3.7'
+
+networks:
+  go-zero-oj:
+    driver: bridge
+
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:latest
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=go-zero-oj
+      - MYSQL_USER=pow1e
+      - MYSQL_PASSWORD=123456
+      - TZ=Asia/Shanghai
+    ports:
+      - "3306:3306"
+    networks:
+      - go-zero-oj
+
+  redis:
+    container_name: redis
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - go-zero-oj
+
+

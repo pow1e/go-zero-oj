@@ -30,7 +30,7 @@ func NewGetUserDetailLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Get
 func (l *GetUserDetailLogic) GetUserDetail(req *types.UserDeitalReq) (resp *types.UserDeitalResp, err error) {
 	userDao := l.svcCtx.Repository.Model.User
 	user, err := userDao.WithContext(l.ctx).
-		Where(userDao.Identity.Eq(req.Identity)).
+		Where(userDao.Identity.Eq(req.Identity), userDao.ID.Neq(consts.AdminID)).
 		First()
 	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
 		return nil, errors.New(consts.ErrUnKnow)

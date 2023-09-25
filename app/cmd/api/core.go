@@ -21,7 +21,6 @@ func main() {
 	conf.MustLoad(*configFile, &c)
 
 	global.InitValidator()
-
 	server := rest.MustNewServer(c.RestConf)
 	defer server.Stop()
 

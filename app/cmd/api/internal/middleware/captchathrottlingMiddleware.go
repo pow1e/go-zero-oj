@@ -25,7 +25,6 @@ func NewCaptchaThrottlingMiddleware(redis *redis.Redis, maxTime int) *CaptchaThr
 func (m *CaptchaThrottlingMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ip := utils.GetIP(r)
-		// TODO 添加ip为空的判断 if ip == "" {}
 		err := getCurrentIpCount(r.Context(), ip, m.redis, m.maxTime)
 		if err != nil {
 			if err.Error() == consts.ErrOverTakeCaptchaMaxTimes {

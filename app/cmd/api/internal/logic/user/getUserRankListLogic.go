@@ -33,6 +33,7 @@ func (l *GetUserRankListLogic) GetUserRankList(req *types.UserRankListReq) (resp
 	userDo := userDao.WithContext(l.ctx).
 		Offset(req.Page).
 		Limit(req.Size).
+		Where(userDao.ID.Neq(consts.AdminID)).
 		Order(userDao.FinishProblemNum.Desc(), userDao.SubmitNum.Desc())
 	if req.Name != "" {
 		userDo.Where(userDao.Name.Eq(req.Name))

@@ -70,7 +70,3 @@ func initMysql(c config.Config) *gorm.DB {
 	GlobalDB = db
 	return GlobalDB
 }
-
-func initLocalCache() {
-
-}

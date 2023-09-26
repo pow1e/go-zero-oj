@@ -13,6 +13,7 @@ import (
 )
 
 var GlobalRepository *Repository
+var GlobalDB *gorm.DB
 
 type Repository struct {
 	Model      *query.Query // gen生成的model模型
@@ -66,7 +67,8 @@ func initMysql(c config.Config) *gorm.DB {
 	if err != nil {
 		panic(err)
 	}
-	return db
+	GlobalDB = db
+	return GlobalDB
 }
 
 func initLocalCache() {

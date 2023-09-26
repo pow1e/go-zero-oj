@@ -27,6 +27,15 @@ const (
 	ErrCreatToken    = "颁发token失败"
 	ErrCreateCaptcha = "生成验证码失败"
 	ErrAuthorization = "用户认证失败,请重试"
+	ErrPermissions   = "权限不足，请重试"
 	ErrTokenExpired  = "当前请求token已过期，请重试"
 	ErrTokenInvalid  = "当前请求token不合法，请重试"
+)
+
+// 问题创建
+const (
+	ErrExistProblemTitle = "该标题已存在，请重试"
+	ErrCreateProblem     = "创建问题失败，请重试"
+	ErrNotExistCategory  = "当前种类不存在，请重试"
+	ErrNotExistProblem   = "当前问题不存在，请重试"
 )

@@ -9,6 +9,7 @@ import (
 	"github.com/wuqianaer/go-zero-oj/app/common/global"
 	"github.com/wuqianaer/go-zero-oj/app/common/response"
 	"net/http"
+	"strings"
 )
 
 type AuthorizationMiddleware struct {
@@ -40,15 +41,25 @@ func (m *AuthorizationMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc
 			return
 		}
 
-		// 判断是否有权利
-		if clams.BaseClaim.ID != consts.AdminID {
+		// 判断是否是管理员路由
+		path := r.URL.Path
+		lastIndex := strings.LastIndex(path, "/")
+		// 如果不存在
+		route := path[lastIndex+1:]
+		if _, ok := consts.AdminRouteMap[route]; !ok {
 			resp.Code = consts.Code_ErrAuthorization
-			resp.Msg = consts.ErrAuthorization
-			response.JsonBaseResponseCtx(r.Context(), w, err)
+			resp.Msg = consts.ErrPermissions
+			response.JsonBaseResponseCtx(r.Context(), w, resp)
 			return
+		} else {
+			if clams.BaseClaim.ID != consts.AdminID {
+				resp.Code = consts.Code_ErrAuthorization
+				resp.Msg = consts.ErrPermissions
+				response.JsonBaseResponseCtx(r.Context(), w, resp)
+				return
+			}
 		}
 
-		//
 		ctxWithValue := context.WithValue(r.Context(), consts.UserInfo, clams)
 
 		// 放行

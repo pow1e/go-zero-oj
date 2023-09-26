@@ -9,6 +9,22 @@
 - redis
 - rabbitmq
 
+## 运行脚本：
+
+**goctl生成代码**
+
+请在cmd/api目录下使用
+
+
+window:
+``` shell
+  goctl api go --api .\core.api --dir ./ --style=goZero
+```
+
+linux:
+``` shell
+```
+
 ## 主要功能：
 
 - [ ] 用户模块

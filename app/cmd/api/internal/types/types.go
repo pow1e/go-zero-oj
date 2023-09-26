@@ -87,10 +87,10 @@ type Problem struct {
 	MaxRuntime int32      `json:"max_runtime"`
 	MaxMem     int32      `json:"max_mem"`
 	Content    string     `json:"content"`
-	Category   []Category `json:"category"`
 	CreatedAt  string     `json:"created_at"`
 	UpdatedAt  string     `json:"updated_at"`
 	DeletedAt  string     `json:"deleted_at"`
+	Category   []Category `json:"category"`
 }
 
 type ProblemPageReq struct {
@@ -139,11 +139,29 @@ type ProblemSubmitListResp struct {
 }
 
 type PublishProblemReq struct {
-	Identity         string `json:"identity"`
-	Title            string `json:"title"`
-	MaxRuntime       int32  `json:"max_runtime"`
-	MaxMem           int32  `json:"max_mem"`
-	Path             string `json:"path"`
-	Content          string `json:"content"`
-	CategoryIdentity string `json:"category_identity"`
+	Title            string   `json:"title"`
+	MaxRuntime       int32    `json:"max_runtime"`
+	MaxMem           int32    `json:"max_mem"`
+	Path             string   `json:"path"`
+	Content          string   `json:"content"`
+	CategoryIdentity []string `json:"category_identity"`
+}
+
+type UpdateProblemReq struct {
+	ProblemIdentity  string   `json:"problem_identity"      validate:"required"           label:"问题唯一标识"`
+	Title            string   `json:"title"                 validate:"required"           label:"标题"`
+	MaxRuntime       int32    `json:"max_runtime"           validate:"required,gt=0"      label:"最大运行时间"`
+	MaxMem           int32    `json:"max_mem"               validate:"required,gt=0"      label:"最大运行内存"`
+	Path             string   `json:"path"                  validate:"required"           label:"数据集路径"`
+	Content          string   `json:"content"               validate:"required"           label:"问题内容"`
+	CategoryIdentity []string `json:"category_identity"     validate:"required"           label:"种类id"`
+}
+
+type UpdateCategoryReq struct {
+	CategoryIdentity string `json:"category_identity"   validate:"required"       label:"种类唯一标识"`
+	Name             string `json:"name"                validate:"required"       label:"种类的名称"`
+}
+
+type DeleteProblemReq struct {
+	DeleteIdentities []int32 `json:"delete_identities"    validate:"required"     label:"所需要删除的id"`
 }

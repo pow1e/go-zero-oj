@@ -117,4 +117,46 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		),
 		rest.WithPrefix("/api/v1/problem"),
 	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.Authorization},
+			[]rest.Route{
+				{
+					Method:  http.MethodPut,
+					Path:    "/update-problem",
+					Handler: admin.UpdateProblemHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithPrefix("/api/v1/problem"),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.Authorization},
+			[]rest.Route{
+				{
+					Method:  http.MethodPut,
+					Path:    "/update-category",
+					Handler: admin.UpdateCategoryHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithPrefix("/api/v1/problem"),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.Authorization},
+			[]rest.Route{
+				{
+					Method:  http.MethodDelete,
+					Path:    "/delete-problem",
+					Handler: admin.DeleteProblemHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithPrefix("/api/v1/problem"),
+	)
 }

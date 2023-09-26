@@ -29,3 +29,11 @@ const (
 	AuthorizationHeader = "Authorization"
 	UserInfo            = "userInfo"
 )
+
+var AdminRouteMap = map[string]struct{}{
+	"publish-problem": {},
+	"update-problem":  {},
+	"update-category": {},
+	"delete-problem":  {},
+	// 继续添加需要的键值对
+}

@@ -14,7 +14,7 @@ const TableNameProblem = "problem"
 
 // Problem mapped from table <problem>
 type Problem struct {
-	ID         int32          `gorm:"column:id;primaryKey" json:"id"`
+	ID         int32          `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
 	Identity   string         `gorm:"column:identity;comment:唯一标识" json:"identity"`          // 唯一标识
 	Title      string         `gorm:"column:title;comment:标题" json:"title"`                  // 标题
 	MaxRuntime int32          `gorm:"column:max_runtime;comment:最大运行时间" json:"max_runtime"`  // 最大运行时间

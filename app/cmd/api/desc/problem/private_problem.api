@@ -1,0 +1,87 @@
+syntax = "v1"
+
+info(
+    title: "problem"
+    desc: "问题接口"
+    version: "1.0"
+)
+
+// 问题提交 管理员
+type (
+    PublishProblemReq {
+        Title string                `json:"title"`
+        MaxRuntime int32            `json:"max_runtime"`
+        MaxMem int32                `json:"max_mem"`
+        Path string                 `json:"path"`
+        Content string              `json:"content"`
+        CategoryIdentity []string   `json:"category_identity"`
+    }
+)
+@server(
+    middleware : Authorization
+    group : admin
+    prefix : /api/v1/problem
+)
+service core-api {
+    @doc "新增问题"
+    @handler publishProblem
+    post /publish-problem (PublishProblemReq)
+}
+
+// 修改问题 管理员
+type (
+    UpdateProblemReq {
+        ProblemIdentity string      `json:"problem_identity"      validate:"required"           label:"问题唯一标识"`
+        Title string                `json:"title"                 validate:"required"           label:"标题"`
+        MaxRuntime int32            `json:"max_runtime"           validate:"required,gt=0"      label:"最大运行时间"`
+        MaxMem int32                `json:"max_mem"               validate:"required,gt=0"      label:"最大运行内存"`
+        Path string                 `json:"path"                  validate:"required"           label:"数据集路径"`
+        Content string              `json:"content"               validate:"required"           label:"问题内容"`
+        CategoryIdentity []string   `json:"category_identity"     validate:"required"           label:"种类id"`
+    }
+)
+@server(
+    middleware : Authorization
+    group : admin
+    prefix : /api/v1/problem
+)
+service core-api {
+    @doc "修改问题"
+    @handler updateProblem
+    put /update-problem (UpdateProblemReq)
+}
+
+// 修改种类 管理员
+type (
+    UpdateCategoryReq {
+        CategoryIdentity string `json:"category_identity"   validate:"required"       label:"种类唯一标识"`
+        Name string             `json:"name"                validate:"required"       label:"种类的名称"`
+    }
+)
+@server(
+    middleware : Authorization
+    group : admin
+    prefix : /api/v1/problem
+)
+service core-api {
+    @doc "修改种类"
+    @handler updateCategory
+    put /update-category (UpdateCategoryReq)
+}
+
+// 删除问题
+type (
+    DeleteProblemReq{
+        DeleteIdentities []int32 `json:"delete_identities"    validate:"required"     label:"所需要删除的id"`
+    }
+)
+@server(
+    middleware : Authorization
+    group : admin
+    prefix : /api/v1/problem
+)
+service core-api {
+    @doc "删除问题"
+    @handler deleteProblem
+    delete /delete-problem (DeleteProblemReq)
+}

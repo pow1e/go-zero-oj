@@ -14,7 +14,8 @@ import (
 	"desc/user/user.api"
 
 	// 问题模块
-	"desc/problem/problem.api"
+	"desc/problem/public_problem.api"
+	"desc/problem/private_problem.api"
 
 	// 提交模块
 	"desc/submit/submit.api"

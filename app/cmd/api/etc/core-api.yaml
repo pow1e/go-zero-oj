@@ -4,7 +4,7 @@ Port: 8080
 Timeout: 500000
 
 Mysql:
-  UserName: pow1e
+  UserName: root
   Password: "123456"
   Path: 127.0.0.1
   Port: "3306"
@@ -14,8 +14,8 @@ Mysql:
 # jwt认证
 Auth:
   AccessSecret: "213sf-sdfsvcx2-asfdsgdsfg"
-  AccessExpire: 3600 # 60秒
-  RefreshExpire: 12000 # 120秒
+  AccessExpire: 43200 # 60秒
+  RefreshExpire: 43200 # 120秒
 
 
 Redis:
